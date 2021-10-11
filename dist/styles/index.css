@@ -27,6 +27,7 @@ main {
     padding: 0px 40px;
     border-radius: 20px;
     background-color:  purple;
+    margin-bottom: 20px;
 }
 .task-header {
     display: flex;
