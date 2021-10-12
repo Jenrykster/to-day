@@ -51,6 +51,12 @@ main {
     background-color: purple;
     color: snow;
 }
+.done {
+    text-decoration: line-through;
+}
+.done .task {
+    background-color: blueviolet;
+}
 .side-bar {
     width: 25vw;
 }
