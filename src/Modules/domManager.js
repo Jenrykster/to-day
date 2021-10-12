@@ -34,11 +34,16 @@ const domManager = (function(){
         let newTaskElement = document.createElement('div');
         newTaskElement.innerHTML = `<div class="task">
         <div class="task-header">
+        <input type="checkbox" ${task.isDone? 'checked':''}> 
                 <h2>${task.title}</h2>
                 <h3>${task.dueDate}</h3>
             </div>
             <p>${task.description}</p>
         </div>`;
+
+        if (task.isDone) newTaskElement.classList.add('done');
+        newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
+
         return newTaskElement;
     }
     const addProjectsToSidebar = (projects) => {
@@ -64,6 +69,10 @@ const domManager = (function(){
         selectedProject = newSelectedProject;
         render(display, projects); // Clean the page and draw again
     }
+    const onTaskComplete = (completedTask, e) => {
+        completedTask.setCompleted();
+        render(display, projects);
+    }  
     return {
         render
     } 
