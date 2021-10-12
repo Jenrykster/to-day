@@ -4,6 +4,7 @@ const domManager = (function(){
     let taskList;
     let projects;
     let selectedProject;
+    let scrollPosition = 0;
     const render = (domElement, projectsList) => {
         display = domElement;
         display.innerHTML = ''; //Clean the page contents 
@@ -19,6 +20,7 @@ const domManager = (function(){
         
         display.appendChild(sideBar);
         display.appendChild(taskList);
+        taskList.scrollTop = scrollPosition
     }
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
@@ -71,6 +73,8 @@ const domManager = (function(){
     }
     const onTaskComplete = (completedTask, e) => {
         completedTask.setCompleted();
+        scrollPosition = taskList.scrollTop;
+        console.log(scrollPosition);
         render(display, projects);
     }  
     return {
