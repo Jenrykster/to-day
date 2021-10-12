@@ -18,6 +18,9 @@ const domManager = (function(){
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
         newProjectElement.innerHTML = `<div class="project"><h2>${project.name}</h3></div>`;
+        if(project.isSelected){
+            newProjectElement.classList.add('selected');
+        }
         return newProjectElement;
     }
     const createTaskElement = (task) => {
