@@ -49,9 +49,9 @@ const domManager = (function(){
     }
     const addTasklistContents = (projects) => {
         let title = document.createElement('h1');
-        title.innerHTML = projects[0].name;
+        title.innerHTML = selectedProject.name;
         taskList.appendChild(title);
-        projects[0].tasks.forEach(task =>{
+        selectedProject.tasks.forEach(task =>{
             let newTask = createTaskElement(task);
             taskList.appendChild(newTask);
         })
