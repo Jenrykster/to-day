@@ -1,8 +1,13 @@
 const domManager = (function(){
+    let display; 
     let sideBar;
     let taskList;
-    const render = (domElement, projects) => {
-        domElement.innerHTML = ''; //Clean the page contents 
+    let projects;
+    let selectedProject;
+    const render = (domElement, projectsList) => {
+        display = domElement;
+        display.innerHTML = ''; //Clean the page contents 
+        projects = projectsList;
 
         sideBar = document.createElement('div');
         sideBar.classList.add('side-bar');
@@ -12,15 +17,17 @@ const domManager = (function(){
         taskList.classList.add('task-list');
         addTasklistContents(projects);
         
-        domElement.appendChild(sideBar);
-        domElement.appendChild(taskList);
+        display.appendChild(sideBar);
+        display.appendChild(taskList);
     }
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
         newProjectElement.innerHTML = `<div class="project"><h2>${project.name}</h3></div>`;
         if(project.isSelected){
             newProjectElement.classList.add('selected');
+            selectedProject = project;
         }
+        newProjectElement.addEventListener('click', changeSelectedProject.bind(null, project));
         return newProjectElement;
     }
     const createTaskElement = (task) => {
@@ -48,6 +55,14 @@ const domManager = (function(){
             let newTask = createTaskElement(task);
             taskList.appendChild(newTask);
         })
+    }
+    const changeSelectedProject = (newSelectedProject, e) => {
+        projects.forEach((project)=>{
+            project.toggleSelected(false); // Unselect all projects
+        })
+        newSelectedProject.toggleSelected(true); 
+        selectedProject = newSelectedProject;
+        render(display, projects); // Clean the page and draw again
     }
     return {
         render
