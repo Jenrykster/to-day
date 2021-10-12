@@ -4,8 +4,12 @@ const projectFactory = (name, selected = false) => {
     project.isSelected = selected;
     project.tasks = [];
 
-    project.addTask = (task) => {
-        project.tasks.push(task);
+    project.addTask = (task, position = 'end') => {
+        if(position == 'start'){
+            project.tasks.unshift(task)
+        }else{
+            project.tasks.push(task);
+        }
     }
     project.toggleSelected = (selected) => {
         if(selected && project.isSelected){

@@ -1,3 +1,5 @@
+import taskFactory from "./taskFactory";
+
 const domManager = (function(){
     let display; 
     let sideBar;
@@ -48,20 +50,32 @@ const domManager = (function(){
 
         return newTaskElement;
     }
+    const createAddTaskButton = () => {
+        let newTaskButtonElement = document.createElement('div');
+        newTaskButtonElement.innerHTML = `
+        <div class="add-task-button">
+            <h2>Add task</h2>
+        </div>
+        `;
+        newTaskButtonElement.addEventListener('click', addTaskToProject);
+        return newTaskButtonElement;
+    }
     const addProjectsToSidebar = (projects) => {
         projects.forEach(project => {
             let newProject = createProjectElement(project);
             sideBar.appendChild(newProject);
         })
     }
-    const addTasklistContents = (projects) => {
+    const addTasklistContents = () => {
         let title = document.createElement('h1');
         title.innerHTML = selectedProject.name;
         taskList.appendChild(title);
+        taskList.appendChild(createAddTaskButton());
         selectedProject.tasks.forEach(task =>{
             let newTask = createTaskElement(task);
             taskList.appendChild(newTask);
         })
+        taskList.appendChild(createAddTaskButton());
     }
     const changeSelectedProject = (newSelectedProject, e) => {
         projects.forEach((project)=>{
@@ -74,9 +88,13 @@ const domManager = (function(){
     const onTaskComplete = (completedTask, e) => {
         completedTask.setCompleted();
         scrollPosition = taskList.scrollTop;
-        console.log(scrollPosition);
         render(display, projects);
     }  
+    const addTaskToProject = () => {
+        selectedProject.addTask(taskFactory('AB', "dopso", '20/20/2000',1));
+        scrollPosition = taskList.scrollTop;
+        render(display, projects);
+    }
     return {
         render
     } 

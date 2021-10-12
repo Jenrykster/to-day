@@ -1,6 +1,4 @@
-* {
-    border: 1px solid purple
-}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 body {
@@ -59,4 +57,8 @@ main {
 }
 .side-bar {
     width: 25vw;
+}
+.add-task-button {
+    background-color: transparent;
+    border: 2px dashed purple;
 }
