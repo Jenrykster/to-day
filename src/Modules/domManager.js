@@ -31,15 +31,15 @@ const domManager = (function(){
         return newProjectElement;
     }
     const createTaskElement = (task) => {
-        let newProjectElement = document.createElement('div');
-        newProjectElement.innerHTML = `<div class="task">
+        let newTaskElement = document.createElement('div');
+        newTaskElement.innerHTML = `<div class="task">
         <div class="task-header">
                 <h2>${task.title}</h2>
                 <h3>${task.dueDate}</h3>
             </div>
             <p>${task.description}</p>
         </div>`;
-        return newProjectElement;
+        return newTaskElement;
     }
     const addProjectsToSidebar = (projects) => {
         projects.forEach(project => {
