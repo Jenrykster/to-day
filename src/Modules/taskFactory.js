@@ -1,9 +1,10 @@
-const taskFactory = (title, description, dueDate, priority) => {
+const taskFactory = (title, description, dueDate, priority, isDone = false) => {
     let task = {
         title,
         description, 
         dueDate,
-        priority
+        priority,
+        isDone
     }
     return task
 }
