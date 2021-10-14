@@ -1,3 +1,6 @@
+import formModule from "./formModule";
+import projectFactory from "./projectFactory";
+import projectManager from "./projectManager";
 import taskFactory from "./taskFactory";
 
 const domManager = (function(){
@@ -60,11 +63,22 @@ const domManager = (function(){
         newTaskButtonElement.addEventListener('click', addTaskToProject.bind(null, pos));
         return newTaskButtonElement;
     }
+    const createAddProjectButton = () => {
+        let newProjectButtonElement = document.createElement('div');
+        newProjectButtonElement.innerHTML = `
+        <div class="add-task-button">
+            <h2>Add project<h2>
+        </div>
+        `;
+        newProjectButtonElement.addEventListener('click', addNewProject);
+        return newProjectButtonElement;
+    }
     const addProjectsToSidebar = (projects) => {
         projects.forEach(project => {
             let newProject = createProjectElement(project);
             sideBar.appendChild(newProject);
         })
+        sideBar.appendChild(createAddProjectButton());
     }
     const addTasklistContents = () => {
         let title = document.createElement('h1');
@@ -91,9 +105,24 @@ const domManager = (function(){
         render(display, projects);
     }  
     const addTaskToProject = (pos, e) => {
-        selectedProject.addTask(taskFactory('AB', "dopso", '20/20/2000',1), pos);
-        scrollPosition = taskList.scrollTop;
-        render(display, projects);
+        formModule.askTaskInfo().then((taskData)=>{
+            if(taskData){
+                let newTaskData = JSON.parse(taskData);
+                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, '20/20/2000',1), pos);
+                scrollPosition = taskList.scrollTop;
+                render(display, projects);  
+            }else{
+                console.log('No task was created');
+                return
+            }
+        });
+    }
+    const addNewProject = (e) => {
+        console.log(e);
+        formModule.askProjectInfo().then((projectName)=>{
+            projectManager.addProject(projectFactory(projectName));
+            render(display, projects);
+        })
     }
     return {
         render
