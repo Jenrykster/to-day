@@ -118,10 +118,14 @@ const domManager = (function(){
         });
     }
     const addNewProject = (e) => {
-        console.log(e);
-        formModule.askProjectInfo().then((projectName)=>{
-            projectManager.addProject(projectFactory(projectName));
-            render(display, projects);
+            formModule.askProjectInfo().then((projectName)=>{
+                if(projectName){
+                    let isDuplicate = projectManager.addProject(projectFactory(projectName));
+                    if(isDuplicate){
+                        formModule.showDuplicateMessage();
+                    }
+                    render(display, projects);
+                }
         })
     }
     return {

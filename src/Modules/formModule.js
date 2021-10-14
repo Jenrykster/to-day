@@ -45,10 +45,13 @@ const formModule = (function(){
         return projectName;
       }
     }
-      
+    const showDuplicateMessage = () => {
+      Swal.fire("Error", 'Can\'t add duplicate projects', 'error');
+    }
     return {
         askTaskInfo,
-        askProjectInfo
+        askProjectInfo,
+        showDuplicateMessage
     }
 })();
 

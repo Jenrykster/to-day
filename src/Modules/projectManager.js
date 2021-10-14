@@ -3,8 +3,15 @@ const projectManager = (function(){
     const getProjects = () => {
         return projects;
     }
-    const addProject = (newProject) => {
-        projects.push(newProject);
+    const addProject = (newProject) => {  //Returns true if project is a duplicate
+        let isDuplicate = projects.some((project)=>{
+            return project.name == newProject.name;
+        })
+        if(isDuplicate){
+            return true; 
+        }else{
+            projects.push(newProject);
+        }
     }
     const removeProject = (projectName) => {
         projects = projects.filter((project)=>{
