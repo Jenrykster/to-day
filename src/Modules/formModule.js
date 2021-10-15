@@ -2,29 +2,29 @@ import Swal from 'sweetalert2/src/sweetalert2.js';
 import {format, parse, parseISO} from 'date-fns'
 import settings from './settings';
 const formModule = (function(){
-    const askTaskInfo =async()=> {
+    const askTaskInfo =async(task = null)=> {
         const {value: formValues } = await Swal.fire({
-            title: 'New Task',
+            title: task ? task.title : 'New Task',
             html:
               `<div class="form-container"> 
-                <input id="task-title-input" name="title" placeholder="Task title" class="swal2-input" required>
-                <input id="task-date-input" class="swal2-input" value="${format(new Date(),'yyyy-MM-dd')}" type="date">   
+                <input id="task-title-input" name="title" placeholder="Task title" value="${task ? task.title : ''}" class="swal2-input" required>
+                <input id="task-date-input" class="swal2-input" value="${task ? format(parse(task.dueDate,'dd/MM/yyyy',new Date()),'yyyy-MM-dd') : format(new Date(),'yyyy-MM-dd')}" type="date">   
               </div>
-                <input id="task-desc-input" placeholder="Task description..." class="swal2-input">
+                <input id="task-desc-input" placeholder="Task description..." value="${task ? task.description : ''}" class="swal2-input">
                 <h2>Priority</h2> 
               <ul style="display:flex">
                 <li>
-                <input type="radio" id="priorityChoice1" name="priority" value="1">
+                <input type="radio" id="priorityChoice1" name="priority" value="1" ${task ? task.priority == 1 ? 'checked' : '': ''}>
                 <label style="color: ${settings.priorityColors[1]}" for="priorityChoice1">High</label>
                 </li>
 
                 <li>
-                <input type="radio" id="priorityChoice2" name="priority" value="2">
+                <input type="radio" id="priorityChoice2" name="priority" value="2" ${task ? task.priority == 2 ? 'checked' : '': ''}>
                 <label style="color: ${settings.priorityColors[2]}" for="priorityChoice2">Medium</label>
                 </li>
 
                 <li>
-                <input type="radio" id="priorityChoice3" name="priority" value="3" checked>
+                <input type="radio" id="priorityChoice3" name="priority" value="3" ${task ? task.priority == 3 ? 'checked' : '': 'checked'}>
                 <label style="color: ${settings.priorityColors[3]}" for="priorityChoice3">Low</label>
                 </li>
               </ul>`,

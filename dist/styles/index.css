@@ -101,4 +101,6 @@ input[type="radio"]:checked + label {
 #task-desc-input {
     width: 95%;
 }
-
+.edit-task-emoji {
+    margin-left: 10px;
+}

@@ -39,14 +39,21 @@ const domManager = (function(){
     }
     const createTaskElement = (task) => {
         let newTaskElement = document.createElement('details');
+        let index = selectedProject.tasks.findIndex((element)=>{
+            return element==task;
+        });
         newTaskElement.innerHTML = `
         <summary class="task-header">
             <input type="checkbox" ${task.isDone? 'checked':''}> 
-            <h2>${task.title}</h2>
+            <div style="display:flex;align-items:center">
+                <h2>${task.title}</h2>
+                <p class="edit-task-emoji">✏️</p>
+            </div>
             <h3>${task.dueDate}</h3>
         </summary>
         <p>${task.description}</p>`;
         newTaskElement.classList.add('task');
+        newTaskElement.dataset.index = index;
         if(task.isDone){
             newTaskElement.style.backgroundColor = 'blueViolet';
             newTaskElement.style.textDecoration = 'line-through';
@@ -55,7 +62,7 @@ const domManager = (function(){
             newTaskElement.style.backgroundColor = settings.priorityColors[task.priority]; //Add color based on priority settings 
         }
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
-
+        newTaskElement.querySelector('.edit-task-emoji').addEventListener('click', onTaskEdit.bind(null, newTaskElement));
         return newTaskElement;
     }
     const createAddTaskButton = (pos) => {
@@ -111,6 +118,22 @@ const domManager = (function(){
         scrollPosition = taskList.scrollTop;
         render(display, projects);
     }  
+    const onTaskEdit = (newTaskElement, e ) => {
+        let currentTask = selectedProject.tasks[newTaskElement.dataset.index];
+        formModule.askTaskInfo(currentTask).then((taskData)=>{
+            if(taskData){
+                let newTaskData = JSON.parse(taskData);
+                currentTask.title = newTaskData.title;
+                currentTask.description = newTaskData.description;
+                currentTask.date = newTaskData.date;
+                currentTask.priority = newTaskData.priority;
+                scrollPosition = taskList.scrollTop;
+                render(display, projects);
+            }else{
+                return
+            }
+        })
+    }
     const addTaskToProject = (pos, e) => {
         formModule.askTaskInfo().then((taskData)=>{
             if(taskData){
