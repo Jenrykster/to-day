@@ -47,7 +47,7 @@ const domManager = (function(){
             </div>
             <p>${task.description}</p>`;
         newTaskElement.classList.add('task');
-        newTaskElement.style.backgroundColor = settings.priorityColors[task.priority];
+        newTaskElement.style.backgroundColor = settings.priorityColors[task.priority]; //Add color based on priority settings 
         if (task.isDone) newTaskElement.classList.add('done');
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
 
@@ -110,7 +110,7 @@ const domManager = (function(){
         formModule.askTaskInfo().then((taskData)=>{
             if(taskData){
                 let newTaskData = JSON.parse(taskData);
-                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date,1), pos);
+                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date, newTaskData.priority), pos);
                 scrollPosition = taskList.scrollTop;
                 render(display, projects);  
             }else{

@@ -12,6 +12,24 @@ main {
     display: flex;
     height: 80vh;
 }
+ul {
+    list-style: none;
+    padding: 0px;
+    justify-content: space-around;
+    margin: 0px 10px;
+}
+li label {
+    margin-right: 35px;
+}
+li label:hover {
+    cursor: pointer;
+}
+input[type="radio"]{
+    visibility:hidden;
+}
+input[type="radio"]:checked + label {
+    background: black;
+}
 .task-list {
     margin: 0px 20px;
     width: 70vw;
