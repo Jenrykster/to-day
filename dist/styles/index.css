@@ -62,3 +62,6 @@ main {
     background-color: transparent;
     border: 2px dashed purple;
 }
+.swal2-styled.swal2-confirm {
+    background-color: purple;
+}
