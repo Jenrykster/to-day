@@ -49,6 +49,7 @@ const domManager = (function(){
                 <h2>${task.title}</h2>
                 <p class="edit-task-emoji">✏️</p>
             </div>
+            <p class="delete-task-emoji">🗑️</p>
             <h3>${task.dueDate}</h3>
         </summary>
         <p>${task.description}</p>`;
@@ -63,6 +64,7 @@ const domManager = (function(){
         }
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
         newTaskElement.querySelector('.edit-task-emoji').addEventListener('click', onTaskEdit.bind(null, newTaskElement));
+        newTaskElement.querySelector('.delete-task-emoji').addEventListener('click', onTaskDelete.bind(null, newTaskElement));
         return newTaskElement;
     }
     const createAddTaskButton = (pos) => {
@@ -133,6 +135,11 @@ const domManager = (function(){
                 return
             }
         })
+    }
+    const onTaskDelete = (taskElement) => {
+        let currentTask = selectedProject.tasks[taskElement.dataset.index];
+        selectedProject.removeTask(currentTask);
+        render(display, projects);
     }
     const addTaskToProject = (pos, e) => {
         formModule.askTaskInfo().then((taskData)=>{
