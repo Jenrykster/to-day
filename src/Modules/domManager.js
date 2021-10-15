@@ -38,17 +38,22 @@ const domManager = (function(){
         return newProjectElement;
     }
     const createTaskElement = (task) => {
-        let newTaskElement = document.createElement('div');
+        let newTaskElement = document.createElement('details');
         newTaskElement.innerHTML = `
-        <div class="task-header">
-        <input type="checkbox" ${task.isDone? 'checked':''}> 
-                <h2>${task.title}</h2>
-                <h3>${task.dueDate}</h3>
-            </div>
-            <p>${task.description}</p>`;
+        <summary class="task-header">
+            <input type="checkbox" ${task.isDone? 'checked':''}> 
+            <h2>${task.title}</h2>
+            <h3>${task.dueDate}</h3>
+        </summary>
+        <p>${task.description}</p>`;
         newTaskElement.classList.add('task');
-        newTaskElement.style.backgroundColor = settings.priorityColors[task.priority]; //Add color based on priority settings 
-        if (task.isDone) newTaskElement.classList.add('done');
+        if(task.isDone){
+            newTaskElement.style.backgroundColor = 'blueViolet';
+            newTaskElement.style.textDecoration = 'line-through';
+            newTaskElement.style.color = 'rgba(255,255,255,0.3)'
+        }else{
+            newTaskElement.style.backgroundColor = settings.priorityColors[task.priority]; //Add color based on priority settings 
+        }
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
 
         return newTaskElement;

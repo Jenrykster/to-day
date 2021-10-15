@@ -12,6 +12,9 @@ main {
     display: flex;
     height: 80vh;
 }
+summary:hover {
+    cursor: pointer;
+}
 ul {
     list-style: none;
     padding: 0px;
@@ -54,6 +57,7 @@ input[type="radio"]:checked + label {
     justify-content: space-between;
     align-items: center;   
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 .task-header *{
     margin: 0px;
@@ -65,12 +69,7 @@ input[type="radio"]:checked + label {
     background-color: purple;
     color: snow;
 }
-.done {
-    text-decoration: line-through;
-}
-.done .task {
-    background-color: blueviolet;
-}
+
 .side-bar {
     width: 25vw;
 }
@@ -102,3 +101,4 @@ input[type="radio"]:checked + label {
 #task-desc-input {
     width: 95%;
 }
+
