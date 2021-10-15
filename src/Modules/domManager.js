@@ -89,7 +89,9 @@ const domManager = (function(){
             let newTask = createTaskElement(task);
             taskList.appendChild(newTask);
         })
-        taskList.appendChild(createAddTaskButton('end'));
+        if(selectedProject.tasks.length > 0){
+            taskList.appendChild(createAddTaskButton('end'));
+        }
     }
     const changeSelectedProject = (newSelectedProject, e) => {
         projects.forEach((project)=>{
@@ -108,7 +110,7 @@ const domManager = (function(){
         formModule.askTaskInfo().then((taskData)=>{
             if(taskData){
                 let newTaskData = JSON.parse(taskData);
-                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, '20/20/2000',1), pos);
+                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date,1), pos);
                 scrollPosition = taskList.scrollTop;
                 render(display, projects);  
             }else{

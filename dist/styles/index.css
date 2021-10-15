@@ -1,5 +1,3 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 body {
     margin: 10px;
@@ -64,4 +62,25 @@ main {
 }
 .swal2-styled.swal2-confirm {
     background-color: purple;
+}
+.swal2-input {
+    margin-left: 10px;
+    margin-right: 10px; 
+}
+.form-container {
+    display: flex;
+}
+.form-container input[type='date']{
+    color: snow;
+    padding-left: 2px;
+    padding-right: 0px;
+}
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);  /* Makes calendar icon white */ 
+}
+#task-title-input {
+    width: 60%;
+}
+#task-desc-input {
+    width: 95%;
 }
