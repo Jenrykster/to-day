@@ -39,15 +39,15 @@ const domManager = (function(){
     }
     const createTaskElement = (task) => {
         let newTaskElement = document.createElement('div');
-        newTaskElement.innerHTML = `<div class="task">
+        newTaskElement.innerHTML = `
         <div class="task-header">
         <input type="checkbox" ${task.isDone? 'checked':''}> 
                 <h2>${task.title}</h2>
                 <h3>${task.dueDate}</h3>
             </div>
-            <p>${task.description}</p>
-        </div>`;
-
+            <p>${task.description}</p>`;
+        newTaskElement.classList.add('task');
+        newTaskElement.style.backgroundColor = settings.priorityColors[task.priority];
         if (task.isDone) newTaskElement.classList.add('done');
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
 
