@@ -2,7 +2,7 @@ import formModule from "./formModule";
 import projectFactory from "./projectFactory";
 import projectManager from "./projectManager";
 import taskFactory from "./taskFactory";
-
+import settings from "./settings";
 const domManager = (function(){
     let display; 
     let sideBar;
