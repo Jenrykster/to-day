@@ -1,7 +1,8 @@
-const projectFactory = (name, selected = false) => {
+const projectFactory = (name, selected = false, type = 'normal') => {
     let project = {};
     project.name = name;
     project.isSelected = selected;
+    project.type = type;
     project.tasks = [];
 
     project.addTask = (task, position = 'end') => {

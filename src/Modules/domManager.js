@@ -99,10 +99,20 @@ const domManager = (function(){
         title.innerHTML = selectedProject.name;
         taskList.appendChild(title);
         taskList.appendChild(createAddTaskButton('start'));
-        selectedProject.tasks.forEach(task =>{
-            let newTask = createTaskElement(task);
-            taskList.appendChild(newTask);
-        })
+        if(selectedProject.type == 'all'){
+            projects.forEach(project=>{
+                project.tasks.forEach(task=>{
+                    let newTask = createTaskElement(task);
+                    taskList.appendChild(newTask);
+                    console.log("opa")
+                })
+            })
+        }else if(selectedProject.type == 'normal'){
+            selectedProject.tasks.forEach(task =>{
+                let newTask = createTaskElement(task);
+                taskList.appendChild(newTask);
+            })
+        }
         if(selectedProject.tasks.length > 0){
             taskList.appendChild(createAddTaskButton('end'));
         }
