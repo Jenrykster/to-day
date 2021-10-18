@@ -69,7 +69,19 @@ input[type="radio"]:checked + label {
     background-color: purple;
     color: snow;
 }
-
+.project {
+    display: flex;
+    align-items: center;
+}
+.project h2 {
+    margin-right: 20px;
+}
+.project-delete-emoji {
+    font-size: larger;
+}
+.project-delete-emoji:hover{
+    cursor: pointer;
+}
 .side-bar {
     width: 25vw;
 }

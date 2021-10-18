@@ -11,10 +11,10 @@ const domManager = (function(){
     let projects;
     let selectedProject;
     let scrollPosition = 0;
-    const render = (domElement, projectsList) => {
+    const render = (domElement) => {
         display = domElement;
         display.innerHTML = ''; //Clean the page contents 
-        projects = projectsList;
+        projects = projectManager.getProjects();
 
         sideBar = document.createElement('div');
         sideBar.classList.add('side-bar');
@@ -30,12 +30,19 @@ const domManager = (function(){
     }
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
-        newProjectElement.innerHTML = `<div class="project"><h2>${project.name}</h3></div>`;
+        newProjectElement.innerHTML = `<div class="project">
+            ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
+            <h2>${project.name}</h2>
+           </div>`
         if(project.isSelected){
             newProjectElement.classList.add('selected');
             selectedProject = project;
         }
         newProjectElement.addEventListener('click', changeSelectedProject.bind(null, project));
+        if(project.type == 'normal'){
+            let deleteProjectButton = newProjectElement.querySelector('.project-delete-emoji');
+            deleteProjectButton.addEventListener('click', onProjectDelete.bind(null, project.name));
+        }
         return newProjectElement;
     }
     const createTaskElement = (task) => {
@@ -158,6 +165,10 @@ const domManager = (function(){
     const onTaskDelete = (taskElement) => {
         let currentTask = selectedProject.tasks[taskElement.dataset.index];
         selectedProject.removeTask(currentTask);
+        render(display, projects);
+    }
+    const onProjectDelete = (project) => {
+        projectManager.removeProject(project);
         render(display, projects);
     }
     const addTaskToProject = (pos, e) => {
