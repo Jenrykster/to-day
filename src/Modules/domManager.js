@@ -146,7 +146,7 @@ const domManager = (function(){
                 let newTaskData = JSON.parse(taskData);
                 currentTask.title = newTaskData.title;
                 currentTask.description = newTaskData.description;
-                currentTask.date = newTaskData.date;
+                currentTask.dueDate = newTaskData.date;
                 currentTask.priority = newTaskData.priority;
                 scrollPosition = taskList.scrollTop;
                 render(display, projects);
