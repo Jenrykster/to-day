@@ -3,6 +3,7 @@ import projectFactory from "./projectFactory";
 import projectManager from "./projectManager";
 import taskFactory from "./taskFactory";
 import settings from "./settings";
+import { format } from "date-fns";
 const domManager = (function(){
     let display; 
     let sideBar;
@@ -104,7 +105,15 @@ const domManager = (function(){
                 project.tasks.forEach(task=>{
                     let newTask = createTaskElement(task);
                     taskList.appendChild(newTask);
-                    console.log("opa")
+                })
+            })
+        }else if(selectedProject.type == 'today'){
+            projects.forEach(project=>{
+                project.tasks.forEach(task=>{
+                    if(task.dueDate == format(new Date(), 'dd/MM/yyyy')){
+                        let newTask = createTaskElement(task);
+                        taskList.appendChild(newTask);
+                    }
                 })
             })
         }else if(selectedProject.type == 'normal'){

@@ -5,5 +5,7 @@ import taskFactory from "./Modules/taskFactory";
 
 let display = document.querySelector('main');
 const defaultProject = projectFactory('ALL TASKS', true, 'all');
-projectManager.addProject(defaultProject);
+const todayProject = projectFactory('TODAY TASKS', false, 'today');
+projectManager.addProject(defaultProject)
+projectManager.addProject(todayProject);
 domManager.render(display, projectManager.getProjects());
