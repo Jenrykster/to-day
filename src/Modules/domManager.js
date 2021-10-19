@@ -12,6 +12,8 @@ const domManager = (function(){
     let selectedProject;
     let scrollPosition = 0;
     const render = (domElement) => {
+        projectManager.saveData();
+        
         display = domElement;
         display.innerHTML = ''; //Clean the page contents 
         projects = projectManager.getProjects();
@@ -61,12 +63,12 @@ const domManager = (function(){
         <p>${task.description}</p>`;
         newTaskElement.classList.add('task');
 
-        newTaskElement.dataset.index = task.originProject.tasks.findIndex((element)=>{
+        newTaskElement.dataset.index = projectManager.getProjectByName(task.originProject).tasks.findIndex((element)=>{
             return element==task;
         });
         // Gets a reference to the index of the project where the task was created 
         newTaskElement.dataset.originProjectIndex = projects.findIndex((project)=>{ 
-            return project == task.originProject;
+            return project.name == task.originProject;
         });
 
         if(task.isDone){
@@ -198,7 +200,7 @@ const domManager = (function(){
         formModule.askTaskInfo().then((taskData)=>{
             if(taskData){
                 let newTaskData = JSON.parse(taskData);
-                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date, newTaskData.priority, false, selectedProject), pos);
+                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date, newTaskData.priority, false, selectedProject.name), pos);
                 scrollPosition = taskList.scrollTop;
                 render(display, projects);  
             }else{

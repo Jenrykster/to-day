@@ -1,7 +1,16 @@
+import projectFactory from "./projectFactory";
+import taskFactory from "./taskFactory";
+
 const projectManager = (function(){
     let projects = []
     const getProjects = () => {
         return projects;
+    }
+    const getProjectByName = (projectName) => {
+        let project = projects.find(project=>{
+            return project.name == projectName;
+        })
+        return project;
     }
     const addProject = (newProject) => {  //Returns true if project is a duplicate
         let isDuplicate = projects.some((project)=>{
@@ -22,15 +31,33 @@ const projectManager = (function(){
         if(taskToMove.originProject == destination){
             return;
         }
-        taskToMove.originProject.removeTask(taskToMove);
-        taskToMove.originProject = destination;
+        getProjectByName(taskToMove.originProject).removeTask(taskToMove);
+        taskToMove.originProject = destination.name;
         destination.addTask(taskToMove);
+    }
+    const saveData = () => {
+        localStorage.setItem('projects', JSON.stringify(projects));
+    }
+    const loadData = () => {
+        let projectsData = JSON.parse(localStorage.getItem('projects'));
+        projectsData.forEach(project => {
+            let loadedProject = projectFactory(project.name, project.isSelected, project.type);
+            let loadedTasks = [];
+            project.tasks.forEach(task=>{
+                loadedTasks.push(taskFactory(task.title, task.description, task.dueDate, task.priority, task.isDone, task.originProject));
+            })
+            loadedProject.tasks = loadedTasks;
+            addProject(loadedProject);
+        })
     }
     return {
         getProjects,
+        getProjectByName,
         addProject,
         removeProject,
-        moveTask
+        moveTask,
+        saveData,
+        loadData
     }
 })()
 
