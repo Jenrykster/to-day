@@ -50,7 +50,7 @@ input[type="radio"]:checked + label {
     padding: 0px 40px;
     border-radius: 20px;
     background-color:  purple;
-    margin-bottom: 20px;
+    margin: 20px 0px;
 }
 .task-header {
     display: flex;
