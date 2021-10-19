@@ -91,6 +91,7 @@ input[type="radio"]:checked + label {
 .add-task-button {
     background-color: transparent;
     border: 2px dashed purple;
+    text-align: center;
 }
 .add-task-button:hover {
     cursor: pointer;
