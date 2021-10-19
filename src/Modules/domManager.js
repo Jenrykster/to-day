@@ -6,6 +6,7 @@ import settings from "./settings";
 import { format } from "date-fns";
 const domManager = (function(){
     let display; 
+    let sideBarButton;
     let sideBar;
     let taskList;
     let projects;
@@ -22,20 +23,27 @@ const domManager = (function(){
         sideBar.classList.add('side-bar');
         addProjectsToSidebar(projects);
 
+        sideBarButton = document.createElement(`div`);
+        sideBarButton.innerHTML = 'OPEN';
+        sideBarButton.classList.add('side-bar-button');
+        sideBarButton.addEventListener('click', toggleSideBar);
+        
         taskList = document.createElement('div');
         taskList.classList.add('task-list');
         addTasklistContents(projects);
         
         display.appendChild(sideBar);
+        display.appendChild(sideBarButton);
         display.appendChild(taskList);
         taskList.scrollTop = scrollPosition
     }
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
-        newProjectElement.innerHTML = `<div class="project">
+        newProjectElement.innerHTML = `
             ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
-            <h2>${project.name}</h2>
-           </div>`
+            <h2>${project.name}</h2>`;
+
+        newProjectElement.classList.add('project');
         if(project.isSelected){
             newProjectElement.classList.add('selected');
             selectedProject = project;
@@ -193,6 +201,7 @@ const domManager = (function(){
         })
     }
     const onProjectDelete = (project) => {
+        selectedProject = projects[0];
         projectManager.removeProject(project);
         render(display, projects);
     }
@@ -219,6 +228,15 @@ const domManager = (function(){
                     render(display, projects);
                 }
         })
+    }
+    const toggleSideBar = (e) => {
+        if(sideBar.style.width == '25vw'){
+            sideBar.style.width = '0px';
+            e.target.innerHTML = 'OPEN';
+        }else if(sideBar.style.width == '0px' || !sideBar.style.width){
+            sideBar.style.width = '25vw';
+            e.target.innerHTML = 'CLOSE';
+        }
     }
     return {
         render

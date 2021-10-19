@@ -72,12 +72,14 @@ input[type="radio"]:checked + label {
 .project {
     display: flex;
     align-items: center;
+    transition: 0.3s;
 }
 .project:hover {
     cursor: pointer;
 }
 .project h2 {
     margin-right: 20px;
+    transition: 0.3s;
 }
 .project-delete-emoji {
     font-size: larger;
@@ -86,7 +88,12 @@ input[type="radio"]:checked + label {
     cursor: pointer;
 }
 .side-bar {
-    width: 25vw;
+    height: 100%;
+    width: 0px;
+    z-index: 1; 
+    left: 0;
+    overflow-x: hidden; 
+    transition: 0.5s; 
 }
 .add-task-button {
     background-color: transparent;
