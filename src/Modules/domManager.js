@@ -47,9 +47,6 @@ const domManager = (function(){
     }
     const createTaskElement = (task) => {
         let newTaskElement = document.createElement('details');
-        let index = selectedProject.tasks.findIndex((element)=>{
-            return element==task;
-        });
         newTaskElement.innerHTML = `
         <summary class="task-header">
             <input type="checkbox" ${task.isDone? 'checked':''}> 
@@ -62,7 +59,15 @@ const domManager = (function(){
         </summary>
         <p>${task.description}</p>`;
         newTaskElement.classList.add('task');
-        newTaskElement.dataset.index = index;
+
+        newTaskElement.dataset.index = task.originProject.tasks.findIndex((element)=>{
+            return element==task;
+        });
+        // Gets a reference to the index of the project where the task was created 
+        newTaskElement.dataset.originProjectIndex = projects.findIndex((project)=>{ 
+            return project == task.originProject;
+        });
+
         if(task.isDone){
             newTaskElement.style.backgroundColor = 'blueViolet';
             newTaskElement.style.textDecoration = 'line-through';
@@ -147,7 +152,10 @@ const domManager = (function(){
         render(display, projects);
     }  
     const onTaskEdit = (newTaskElement, e ) => {
-        let currentTask = selectedProject.tasks[newTaskElement.dataset.index];
+        let taskOriginalProject = projects[newTaskElement.dataset.originProjectIndex];
+        console.log(taskOriginalProject);
+        console.log(newTaskElement.dataset.index);
+        let currentTask = taskOriginalProject.tasks[newTaskElement.dataset.index];
         formModule.askTaskInfo(currentTask).then((taskData)=>{
             if(taskData){
                 let newTaskData = JSON.parse(taskData);
@@ -175,7 +183,7 @@ const domManager = (function(){
         formModule.askTaskInfo().then((taskData)=>{
             if(taskData){
                 let newTaskData = JSON.parse(taskData);
-                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date, newTaskData.priority), pos);
+                selectedProject.addTask(taskFactory(newTaskData.title, newTaskData.description, newTaskData.date, newTaskData.priority, false, selectedProject), pos);
                 scrollPosition = taskList.scrollTop;
                 render(display, projects);  
             }else{
