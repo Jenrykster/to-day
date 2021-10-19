@@ -129,7 +129,7 @@ const domManager = (function(){
                 taskList.appendChild(newTask);
             })
         }
-        if(selectedProject.tasks.length > 0){
+        if(selectedProject.tasks.length > 0 || (selectedProject.type != 'normal' && taskList.children.length > 2)){
             taskList.appendChild(createAddTaskButton('end'));
         }
     }
