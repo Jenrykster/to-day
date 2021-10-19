@@ -18,10 +18,19 @@ const projectManager = (function(){
             return project.name != projectName;
         })
     }
+    const moveTask = (taskToMove, destination) => {
+        if(taskToMove.originProject == destination){
+            return;
+        }
+        taskToMove.originProject.removeTask(taskToMove);
+        taskToMove.originProject = destination;
+        destination.addTask(taskToMove);
+    }
     return {
         getProjects,
         addProject,
-        removeProject
+        removeProject,
+        moveTask
     }
 })()
 

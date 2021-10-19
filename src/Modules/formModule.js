@@ -69,12 +69,41 @@ const formModule = (function(){
         return projectName;
       }
     }
+    const askProjectMove = async (projects) => {
+      let projectOptions = {};
+      projects.forEach(project => {
+        if(project.type == 'normal'){
+          projectOptions[project.name] = project.name;
+        }
+      })
+      const { value: project } = await Swal.fire({
+        title: 'Select task destination',
+        input: 'select',
+        inputOptions: projectOptions,
+        inputPlaceholder: 'Select a projecct',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          return new Promise(resolve => {
+            if (value) {
+              resolve();
+            } else {
+              resolve('You need to select a project');
+            }
+          })
+        }
+      })
+      
+      if (project) {
+        return project;
+      }
+    }
     const showDuplicateMessage = () => {
       Swal.fire("Error", 'Can\'t add duplicate projects', 'error');
     }
     return {
         askTaskInfo,
         askProjectInfo,
+        askProjectMove,
         showDuplicateMessage
     }
 })();

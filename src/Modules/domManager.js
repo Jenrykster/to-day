@@ -55,6 +55,7 @@ const domManager = (function(){
                 <p class="edit-task-emoji">✏️</p>
             </div>
             <p class="delete-task-emoji">🗑️</p>
+            <p class="move-task-emoji">📁</p>
             <h3>${task.dueDate}</h3>
         </summary>
         <p>${task.description}</p>`;
@@ -78,6 +79,7 @@ const domManager = (function(){
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
         newTaskElement.querySelector('.edit-task-emoji').addEventListener('click', onTaskEdit.bind(null, newTaskElement));
         newTaskElement.querySelector('.delete-task-emoji').addEventListener('click', onTaskDelete.bind(null, newTaskElement));
+        newTaskElement.querySelector('.move-task-emoji').addEventListener('click', onTaskMove.bind(null, newTaskElement));
         return newTaskElement;
     }
     const createAddTaskButton = (pos) => {
@@ -144,12 +146,12 @@ const domManager = (function(){
         })
         newSelectedProject.toggleSelected(true); 
         selectedProject = newSelectedProject;
-        render(display, projects); // Clean the page and draw again
+        render(display); // Clean the page and draw again
     }
     const onTaskComplete = (completedTask, e) => {
         completedTask.setCompleted();
         scrollPosition = taskList.scrollTop;
-        render(display, projects);
+        render(display);
     }  
     const onTaskEdit = (newTaskElement, e ) => {
         let taskOriginalProject = projects[newTaskElement.dataset.originProjectIndex];
@@ -162,7 +164,7 @@ const domManager = (function(){
                 currentTask.dueDate = newTaskData.date;
                 currentTask.priority = newTaskData.priority;
                 scrollPosition = taskList.scrollTop;
-                render(display, projects);
+                render(display);
             }else{
                 return
             }
@@ -172,6 +174,21 @@ const domManager = (function(){
         let currentTask = selectedProject.tasks[taskElement.dataset.index];
         selectedProject.removeTask(currentTask);
         render(display, projects);
+    }
+    const onTaskMove = (taskElement) => {
+        let taskOriginalProject = projects[taskElement.dataset.originProjectIndex];
+        let currentTask = taskOriginalProject.tasks[taskElement.dataset.index];
+        formModule.askProjectMove(projects).then(projectDestName =>{
+            if(projectDestName){
+                let projectIndex = projects.findIndex(project=>{
+                    return project.name == projectDestName;
+                });
+                projectManager.moveTask(currentTask, projects[projectIndex]);
+                render(display);
+            }else{
+                return;
+            }
+        })
     }
     const onProjectDelete = (project) => {
         projectManager.removeProject(project);
