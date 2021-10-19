@@ -153,8 +153,6 @@ const domManager = (function(){
     }  
     const onTaskEdit = (newTaskElement, e ) => {
         let taskOriginalProject = projects[newTaskElement.dataset.originProjectIndex];
-        console.log(taskOriginalProject);
-        console.log(newTaskElement.dataset.index);
         let currentTask = taskOriginalProject.tasks[newTaskElement.dataset.index];
         formModule.askTaskInfo(currentTask).then((taskData)=>{
             if(taskData){
