@@ -12,6 +12,7 @@ const domManager = (function(){
     let projects;
     let selectedProject;
     let scrollPosition = 0;
+    let sideBarOpen = false;
     const render = (domElement) => {
         projects = projectManager.getProjects();
         projectManager.saveData();
@@ -22,11 +23,13 @@ const domManager = (function(){
         sideBar.classList.add('side-bar');
         addProjectsToSidebar(projects);
 
-        sideBarButton = document.createElement(`div`);
-        sideBarButton.innerHTML = 'OPEN';
+        sideBarButton = document.createElement(`span`);
+        sideBarButton.innerHTML = 'menu';
+        sideBarButton.classList.add('material-icons'); //Google material icons class
         sideBarButton.classList.add('side-bar-button');
         sideBarButton.addEventListener('click', toggleSideBar);
         
+        if(sideBarOpen) openSideBar();
         taskList = document.createElement('div');
         taskList.classList.add('task-list');
         addTasklistContents(projects);
@@ -245,13 +248,18 @@ const domManager = (function(){
         })
     }
     const toggleSideBar = (e) => {
-        if(sideBar.style.width == '25vw'){
+        if(sideBarOpen){
             sideBar.style.width = '0px';
-            e.target.innerHTML = 'OPEN';
-        }else if(sideBar.style.width == '0px' || !sideBar.style.width){
-            sideBar.style.width = '25vw';
-            e.target.innerHTML = 'CLOSE';
+            sideBarButton.innerHTML = 'menu';
+            sideBarOpen = false;
+        }else{
+            openSideBar();
+            sideBarOpen = true;
         }
+    }
+    const openSideBar = () => {
+        sideBar.style.width = '25vw';
+        sideBarButton.innerHTML = 'menu_open';      
     }
     return {
         render

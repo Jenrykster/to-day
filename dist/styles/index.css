@@ -96,6 +96,10 @@ input[type="radio"]:checked + label {
     overflow-x: hidden; 
     transition: 0.5s; 
 }
+.side-bar-button {
+    color: purple;
+    font-size: 3em;
+}
 .add-task-button {
     background-color: transparent;
     border: 2px dashed purple;
