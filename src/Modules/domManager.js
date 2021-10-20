@@ -13,11 +13,10 @@ const domManager = (function(){
     let selectedProject;
     let scrollPosition = 0;
     const render = (domElement) => {
+        projects = projectManager.getProjects();
         projectManager.saveData();
-        
         display = domElement;
         display.innerHTML = ''; //Clean the page contents 
-        projects = projectManager.getProjects();
 
         sideBar = document.createElement('div');
         sideBar.classList.add('side-bar');
@@ -41,9 +40,18 @@ const domManager = (function(){
         let newProjectElement = document.createElement('div');
         newProjectElement.innerHTML = `
             ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
+<<<<<<< HEAD
             <h2>${project.name}</h2>`;
 
         newProjectElement.classList.add('project');
+=======
+            <h2>${project.name}</h2>`
+        newProjectElement.classList.add('project');
+        newProjectElement.dataset.projectIndex = projects.findIndex(p=>{
+            return p == project;
+        });
+
+>>>>>>> main
         if(project.isSelected){
             newProjectElement.classList.add('selected');
             selectedProject = project;
@@ -144,13 +152,16 @@ const domManager = (function(){
             selectedProject.tasks.forEach(task =>{
                 let newTask = createTaskElement(task);
                 taskList.appendChild(newTask);
-            })
+            })             
         }
         if(selectedProject.tasks.length > 0 || (selectedProject.type != 'normal' && taskList.children.length > 2)){
             taskList.appendChild(createAddTaskButton('end'));
         }
     }
     const changeSelectedProject = (newSelectedProject, e) => {
+        if(e && e.target.nodeName == 'P'){
+            return;
+        }
         projects.forEach((project)=>{
             project.toggleSelected(false); // Unselect all projects
         })
@@ -181,9 +192,15 @@ const domManager = (function(){
         })
     }
     const onTaskDelete = (taskElement) => {
-        let currentTask = selectedProject.tasks[taskElement.dataset.index];
-        selectedProject.removeTask(currentTask);
-        render(display, projects);
+        formModule.askConfirm().then(result=>{
+            if(result){
+                let currentTask = selectedProject.tasks[taskElement.dataset.index];
+                selectedProject.removeTask(currentTask);
+                render(display, projects);
+            }else{
+                return
+            }
+        })
     }
     const onTaskMove = (taskElement) => {
         let taskOriginalProject = projects[taskElement.dataset.originProjectIndex];
@@ -201,9 +218,22 @@ const domManager = (function(){
         })
     }
     const onProjectDelete = (project) => {
+<<<<<<< HEAD
         selectedProject = projects[0];
         projectManager.removeProject(project);
         render(display, projects);
+=======
+        formModule.askConfirm().then(result=>{
+            if(result){
+                projectManager.removeProject(project);
+                changeSelectedProject(projects[0]);
+                render(display);
+            }
+            else{
+                return
+            }
+        })
+>>>>>>> main
     }
     const addTaskToProject = (pos, e) => {
         formModule.askTaskInfo().then((taskData)=>{

@@ -79,7 +79,11 @@ input[type="radio"]:checked + label {
 }
 .project h2 {
     margin-right: 20px;
+<<<<<<< HEAD
     transition: 0.3s;
+=======
+    pointer-events: none;
+>>>>>>> main
 }
 .project-delete-emoji {
     font-size: larger;

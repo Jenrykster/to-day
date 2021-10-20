@@ -23,6 +23,7 @@ const projectManager = (function(){
         }
     }
     const removeProject = (projectName) => {
+        getProjectByName(projectName).removeAllTasks();
         projects = projects.filter((project)=>{
             return project.name != projectName;
         })

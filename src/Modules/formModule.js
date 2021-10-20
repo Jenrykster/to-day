@@ -97,6 +97,16 @@ const formModule = (function(){
         return project;
       }
     }
+    const askConfirm = async () => {
+      const {value: result} = await Swal.fire({
+        title: 'Delete ?',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+      })
+      if(result){
+        return result;
+      }
+    }
     const showDuplicateMessage = () => {
       Swal.fire("Error", 'Can\'t add duplicate projects', 'error');
     }
@@ -104,6 +114,7 @@ const formModule = (function(){
         askTaskInfo,
         askProjectInfo,
         askProjectMove,
+        askConfirm,
         showDuplicateMessage
     }
 })();

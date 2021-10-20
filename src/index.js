@@ -8,4 +8,4 @@ const defaultProject = projectFactory('ALL TASKS', true, 'all');
 const todayProject = projectFactory('TODAY TASKS', false, 'today');
 projectManager.addProject(defaultProject)
 projectManager.addProject(todayProject);
-domManager.render(display, projectManager.getProjects());
+domManager.render(display);
