@@ -152,6 +152,11 @@ const domManager = (function(){
         }
         if(selectedProject.tasks.length > 0 || (selectedProject.type != 'normal' && taskList.children.length > 2)){
             taskList.appendChild(createAddTaskButton('end'));
+        }else{
+            let noTaskMessage = document.createElement('h1');
+            noTaskMessage.innerHTML = 'No tasks';
+            noTaskMessage.classList.add('no-task');
+            taskList.appendChild(noTaskMessage);
         }
     }
     const changeSelectedProject = (newSelectedProject, e) => {
