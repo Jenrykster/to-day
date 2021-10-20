@@ -249,7 +249,7 @@ const domManager = (function(){
     }
     const toggleSideBar = (e) => {
         if(sideBarOpen){
-            sideBar.style.width = '0px';
+            sideBar.classList.remove('open');
             sideBarButton.innerHTML = 'menu';
             sideBarOpen = false;
         }else{
@@ -258,7 +258,7 @@ const domManager = (function(){
         }
     }
     const openSideBar = () => {
-        sideBar.style.width = '25vw';
+        sideBar.classList.toggle('open');
         sideBarButton.innerHTML = 'menu_open';      
     }
     return {
