@@ -20,4 +20,4 @@ For this project I used the following npm modules:
 
 I organized the code following the [factory](https://pt.wikipedia.org/wiki/Factory_Method) and [module](https://en.wikipedia.org/wiki/Module_pattern) patterns.
 
-### You can visit the page [HERE](https://jenrykster.github.io/restaurant-page/).
+### You can visit the page [HERE](https://jenrykster.github.io/to-day/).
