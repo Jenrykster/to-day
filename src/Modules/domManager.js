@@ -12,11 +12,10 @@ const domManager = (function(){
     let selectedProject;
     let scrollPosition = 0;
     const render = (domElement) => {
+        projects = projectManager.getProjects();
         projectManager.saveData();
-        
         display = domElement;
         display.innerHTML = ''; //Clean the page contents 
-        projects = projectManager.getProjects();
 
         sideBar = document.createElement('div');
         sideBar.classList.add('side-bar');
@@ -32,10 +31,14 @@ const domManager = (function(){
     }
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
-        newProjectElement.innerHTML = `<div class="project">
+        newProjectElement.innerHTML = `
             ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
-            <h2>${project.name}</h2>
-           </div>`
+            <h2>${project.name}</h2>`
+        newProjectElement.classList.add('project');
+        newProjectElement.dataset.projectIndex = projects.findIndex(p=>{
+            return p == project;
+        });
+
         if(project.isSelected){
             newProjectElement.classList.add('selected');
             selectedProject = project;
@@ -136,13 +139,16 @@ const domManager = (function(){
             selectedProject.tasks.forEach(task =>{
                 let newTask = createTaskElement(task);
                 taskList.appendChild(newTask);
-            })
+            })             
         }
         if(selectedProject.tasks.length > 0 || (selectedProject.type != 'normal' && taskList.children.length > 2)){
             taskList.appendChild(createAddTaskButton('end'));
         }
     }
     const changeSelectedProject = (newSelectedProject, e) => {
+        if(e && e.target.nodeName == 'P'){
+            return;
+        }
         projects.forEach((project)=>{
             project.toggleSelected(false); // Unselect all projects
         })
@@ -194,7 +200,8 @@ const domManager = (function(){
     }
     const onProjectDelete = (project) => {
         projectManager.removeProject(project);
-        render(display, projects);
+        changeSelectedProject(projects[0]);
+        render(display);
     }
     const addTaskToProject = (pos, e) => {
         formModule.askTaskInfo().then((taskData)=>{

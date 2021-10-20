@@ -78,6 +78,7 @@ input[type="radio"]:checked + label {
 }
 .project h2 {
     margin-right: 20px;
+    pointer-events: none;
 }
 .project-delete-emoji {
     font-size: larger;
