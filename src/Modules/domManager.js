@@ -40,18 +40,9 @@ const domManager = (function(){
         let newProjectElement = document.createElement('div');
         newProjectElement.innerHTML = `
             ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
-<<<<<<< HEAD
             <h2>${project.name}</h2>`;
 
         newProjectElement.classList.add('project');
-=======
-            <h2>${project.name}</h2>`
-        newProjectElement.classList.add('project');
-        newProjectElement.dataset.projectIndex = projects.findIndex(p=>{
-            return p == project;
-        });
-
->>>>>>> main
         if(project.isSelected){
             newProjectElement.classList.add('selected');
             selectedProject = project;
@@ -218,11 +209,6 @@ const domManager = (function(){
         })
     }
     const onProjectDelete = (project) => {
-<<<<<<< HEAD
-        selectedProject = projects[0];
-        projectManager.removeProject(project);
-        render(display, projects);
-=======
         formModule.askConfirm().then(result=>{
             if(result){
                 projectManager.removeProject(project);
@@ -233,7 +219,6 @@ const domManager = (function(){
                 return
             }
         })
->>>>>>> main
     }
     const addTaskToProject = (pos, e) => {
         formModule.askTaskInfo().then((taskData)=>{
