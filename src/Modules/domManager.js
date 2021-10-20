@@ -179,9 +179,15 @@ const domManager = (function(){
         })
     }
     const onTaskDelete = (taskElement) => {
-        let currentTask = selectedProject.tasks[taskElement.dataset.index];
-        selectedProject.removeTask(currentTask);
-        render(display, projects);
+        formModule.askConfirm().then(result=>{
+            if(result){
+                let currentTask = selectedProject.tasks[taskElement.dataset.index];
+                selectedProject.removeTask(currentTask);
+                render(display, projects);
+            }else{
+                return
+            }
+        })
     }
     const onTaskMove = (taskElement) => {
         let taskOriginalProject = projects[taskElement.dataset.originProjectIndex];
@@ -199,9 +205,16 @@ const domManager = (function(){
         })
     }
     const onProjectDelete = (project) => {
-        projectManager.removeProject(project);
-        changeSelectedProject(projects[0]);
-        render(display);
+        formModule.askConfirm().then(result=>{
+            if(result){
+                projectManager.removeProject(project);
+                changeSelectedProject(projects[0]);
+                render(display);
+            }
+            else{
+                return
+            }
+        })
     }
     const addTaskToProject = (pos, e) => {
         formModule.askTaskInfo().then((taskData)=>{
