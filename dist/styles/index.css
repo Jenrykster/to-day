@@ -52,6 +52,9 @@ input[type="radio"]:checked + label {
     background-color:  purple;
     margin: 20px 0px;
 }
+.task span {
+    margin-left: auto;
+}
 .task-header {
     display: flex;
     justify-content: space-between;
@@ -64,6 +67,29 @@ input[type="radio"]:checked + label {
 }
 .task-header h3{
     font-weight: 100;
+}
+.task-header h2{
+    text-align: center;
+}
+.task-header input[type="checkbox"]{
+    margin: 10px;
+}
+.task-options {
+    height: 30px;
+    width: calc(100% + 80px);
+    border-radius: 0px 0px 10px 10px;
+    
+    justify-content: space-around;
+    margin-left: -40px;
+    background-color: aqua;
+    transition: 0.3s;
+}
+.date-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
 }
 .selected {
     background-color: purple;
@@ -139,8 +165,33 @@ input[type="radio"]:checked + label {
 .edit-task-emoji {
     margin-left: 10px;
 }
-
-@media (max-width: 400px) {
+@media (max-width: 430px) {
+    .open {
+        width: 35vw;
+    }
+    .date-title-container {
+        flex-direction: column;
+    }
+    .side-bar .project{
+        font-size: small;
+    }
+    .add-task-button {
+        font-size: small;
+    }
+    .task-header input[type="checkbox"]{
+        margin: 2px;
+    }
+    .task {
+        padding: 10px;
+    }
+    .task-options {
+        height: 30px;
+        margin-bottom: -10px;
+        width: calc(100% + 20px);
+        margin-left: -10px;
+    }
+}
+@media (max-width: 360px) {
     header h1{
         text-align: center;
         font-size: larger;
@@ -163,11 +214,19 @@ input[type="radio"]:checked + label {
     #task-desc-input {
         height: 90px;
     }
-    .task {
-        padding: 10px;
+    
+    .task-header {
+        justify-content: space-around;
     }
+    
+   
     li label{
         white-space: nowrap;
         margin: 3px;
     }
+    
+    .side-bar-button {
+        font-size: 2.2em;
+    }
+    
 }

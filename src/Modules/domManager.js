@@ -62,15 +62,17 @@ const domManager = (function(){
         newTaskElement.innerHTML = `
         <summary class="task-header">
             <input type="checkbox" ${task.isDone? 'checked':''}> 
-            <div style="display:flex;align-items:center">
+            <div class="date-title-container">
                 <h2>${task.title}</h2>
-                <p class="edit-task-emoji">✏️</p>
+                <h3>${task.dueDate}</h3>
             </div>
-            <p class="delete-task-emoji">🗑️</p>
-            <p class="move-task-emoji">📁</p>
-            <h3>${task.dueDate}</h3>
         </summary>
-        <p>${task.description}</p>`;
+        <p>${task.description}</p>
+        <div class="task-options" style="display:flex;align-items:center">
+                <p class="option edit-task-emoji ">✏️</p>
+                <p class="option delete-task-emoji">🗑️</p>
+                <p class="option move-task-emoji">📁</p>   
+            </div>`;
         newTaskElement.classList.add('task');
 
         newTaskElement.dataset.index = projectManager.getProjectByName(task.originProject).tasks.findIndex((element)=>{
@@ -260,6 +262,17 @@ const domManager = (function(){
     const openSideBar = () => {
         sideBar.classList.toggle('open');
         sideBarButton.innerHTML = 'menu_open';      
+    }
+    const openOptions = (e) => {
+        let taskOptions = e.target.parentElement.querySelector('.task-options');
+        console.log(taskOptions.style.width);
+        if(taskOptions.style.width == '0px' || taskOptions.style.width == ''){
+            taskOptions.style.width = '20%';
+            e.target.innerHTML = '->'
+        }else{
+            taskOptions.style.width = '0px';
+            e.target.innerHTML = '<-'
+        }
     }
     return {
         render
