@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+body {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: black;
+    color: snow;
+    font-family: 'Poppins', sans-serif;
+}
+main {
+    display: flex;
+    justify-content: center;
+    height: 80vh;
+}
+summary:hover {
+    cursor: pointer;
+}
+ul {
+    list-style: none;
+    padding: 0px;
+    justify-content: space-around;
+    margin: 0px 10px;
+}
+li label {
+    margin-right: 35px;
+}
+li label:hover {
+    cursor: pointer;
+}
+input[type="radio"]{
+    visibility:hidden;
+}
+input[type="radio"]:checked + label {
+    background: black;
+}
+.task-list {
+    margin: 0px 20px;
+    width: 70vw;
+    padding: 0px 30px;
+    overflow-y: scroll;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+.task-list h1{
+    margin: 15px 20px;
+}
+.task{
+    padding: 0px 40px;
+    border-radius: 20px;
+    background-color:  purple;
+    margin: 20px 0px;
+}
+.task span {
+    margin-left: auto;
+}
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;   
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.task-header *{
+    margin: 0px;
+}
+.task-header h3{
+    font-weight: 100;
+}
+.task-header h2{
+    text-align: center;
+}
+.task-header input[type="checkbox"]{
+    margin: 10px;
+}
+.task-options {
+    height: 30px;
+    width: calc(100% + 80px);
+    border-radius: 0px 0px 10px 10px;
+    
+    justify-content: space-around;
+    margin-left: -40px;
+    background-color: snow;
+    transition: 0.3s;
+}
+.date-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+.selected {
+    background-color: purple;
+    color: snow;
+}
+.project {
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+}
+.project:hover {
+    cursor: pointer;
+}
+.project h2 {
+    margin-right: 20px;
+    transition: 0.3s;
+    pointer-events: none;
+}
+.project-delete-button {
+    color: #FF0505;
+    font-size: larger;
+}
+.project-delete-button:hover{
+    cursor: pointer;
+}
+.side-bar {
+    height: 100%;
+    width: 0px;
+    z-index: 1; 
+    left: 0;
+    overflow-x: hidden; 
+    transition: 0.5s; 
+}
+.open {
+    width: 25vw;
+}
+.side-bar-button {
+    color: purple;
+    font-size: 3em;
+    margin-top: 15px;
+}
+.side-bar-button:hover {
+    cursor: pointer;
+}
+.add-task-button {
+    background-color: transparent;
+    border: 2px dashed purple;
+    text-align: center;
+}
+.add-task-button:hover {
+    cursor: pointer;
+}
+.swal2-styled.swal2-confirm {
+    background-color: purple;
+}
+.swal2-input {
+    margin-left: 10px;
+    margin-right: 10px; 
+}
+.form-container {
+    display: flex;
+}
+.form-container input[type='date']{
+    color: snow;
+    padding-left: 2px;
+    padding-right: 0px;
+}
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);  /* Makes calendar icon white */ 
+}
+#task-title-input {
+    width: 60%;
+}
+#task-desc-input {
+    width: 95%;
+}
+.option {
+    text-align: center;
+    color: black;
+}
+.option:hover {
+    cursor: pointer;
+}
+.no-task {
+    color: gray;
+    text-align: center;
+}
+@media (max-width: 430px) {
+    .open {
+        width: 35vw;
+    }
+    .date-title-container {
+        flex-direction: column;
+    }
+    .side-bar .project{
+        font-size: small;
+    }
+    .add-task-button {
+        font-size: small;
+    }
+    .task-header input[type="checkbox"]{
+        margin: 2px;
+    }
+    .task {
+        padding: 10px;
+    }
+    .task-options {
+        height: 30px;
+        margin-bottom: -10px;
+        width: calc(100% + 20px);
+        margin-left: -10px;
+    }
+}
+@media (max-width: 360px) {
+    header h1{
+        text-align: center;
+        font-size: larger;
+    }
+    .open { /* Increase sidebar size on smaller screens*/
+        width: 50vw;
+    }
+    .task-list {
+        margin: 0px;
+        padding: 0px;
+    }
+    .task-list h1 {
+        text-align: center;
+    }
+    .form-container *{
+        margin: 3px;
+        padding: 4px;
+        text-align: center;
+    }
+    #task-desc-input {
+        height: 90px;
+    }
+    
+    .task-header {
+        justify-content: space-around;
+    }
+    
+   
+    li label{
+        white-space: nowrap;
+        margin: 3px;
+    }
+    
+    .side-bar-button {
+        font-size: 2.2em;
+    }
+    
+}
