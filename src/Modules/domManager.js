@@ -6,11 +6,13 @@ import settings from "./settings";
 import { format } from "date-fns";
 const domManager = (function(){
     let display; 
+    let sideBarButton;
     let sideBar;
     let taskList;
     let projects;
     let selectedProject;
     let scrollPosition = 0;
+    let sideBarOpen = false;
     const render = (domElement) => {
         projects = projectManager.getProjects();
         projectManager.saveData();
@@ -21,11 +23,19 @@ const domManager = (function(){
         sideBar.classList.add('side-bar');
         addProjectsToSidebar(projects);
 
+        sideBarButton = document.createElement(`span`);
+        sideBarButton.innerHTML = 'menu';
+        sideBarButton.classList.add('material-icons'); //Google material icons class
+        sideBarButton.classList.add('side-bar-button');
+        sideBarButton.addEventListener('click', toggleSideBar);
+        
+        if(sideBarOpen) openSideBar();
         taskList = document.createElement('div');
         taskList.classList.add('task-list');
         addTasklistContents(projects);
         
         display.appendChild(sideBar);
+        display.appendChild(sideBarButton);
         display.appendChild(taskList);
         taskList.scrollTop = scrollPosition
     }
@@ -33,12 +43,9 @@ const domManager = (function(){
         let newProjectElement = document.createElement('div');
         newProjectElement.innerHTML = `
             ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
-            <h2>${project.name}</h2>`
-        newProjectElement.classList.add('project');
-        newProjectElement.dataset.projectIndex = projects.findIndex(p=>{
-            return p == project;
-        });
+            <h2>${project.name}</h2>`;
 
+        newProjectElement.classList.add('project');
         if(project.isSelected){
             newProjectElement.classList.add('selected');
             selectedProject = project;
@@ -55,15 +62,17 @@ const domManager = (function(){
         newTaskElement.innerHTML = `
         <summary class="task-header">
             <input type="checkbox" ${task.isDone? 'checked':''}> 
-            <div style="display:flex;align-items:center">
+            <div class="date-title-container">
                 <h2>${task.title}</h2>
-                <p class="edit-task-emoji">✏️</p>
+                <h3>${task.dueDate}</h3>
             </div>
-            <p class="delete-task-emoji">🗑️</p>
-            <p class="move-task-emoji">📁</p>
-            <h3>${task.dueDate}</h3>
         </summary>
-        <p>${task.description}</p>`;
+        <p>${task.description}</p>
+        <div class="task-options" style="display:flex;align-items:center">
+                <p class="option edit-task-emoji ">✏️</p>
+                <p class="option delete-task-emoji">🗑️</p>
+                <p class="option move-task-emoji">📁</p>   
+            </div>`;
         newTaskElement.classList.add('task');
 
         newTaskElement.dataset.index = projectManager.getProjectByName(task.originProject).tasks.findIndex((element)=>{
@@ -239,6 +248,31 @@ const domManager = (function(){
                     render(display, projects);
                 }
         })
+    }
+    const toggleSideBar = (e) => {
+        if(sideBarOpen){
+            sideBar.classList.remove('open');
+            sideBarButton.innerHTML = 'menu';
+            sideBarOpen = false;
+        }else{
+            openSideBar();
+            sideBarOpen = true;
+        }
+    }
+    const openSideBar = () => {
+        sideBar.classList.toggle('open');
+        sideBarButton.innerHTML = 'menu_open';      
+    }
+    const openOptions = (e) => {
+        let taskOptions = e.target.parentElement.querySelector('.task-options');
+        console.log(taskOptions.style.width);
+        if(taskOptions.style.width == '0px' || taskOptions.style.width == ''){
+            taskOptions.style.width = '20%';
+            e.target.innerHTML = '->'
+        }else{
+            taskOptions.style.width = '0px';
+            e.target.innerHTML = '<-'
+        }
     }
     return {
         render
