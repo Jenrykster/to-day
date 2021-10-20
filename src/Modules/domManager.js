@@ -42,7 +42,7 @@ const domManager = (function(){
     const createProjectElement = (project) => {
         let newProjectElement = document.createElement('div');
         newProjectElement.innerHTML = `
-            ${project.type == 'normal' ? "<p class='project-delete-emoji'>❌</p>" : ''}
+            ${project.type == 'normal' ? "<p class='material-icons project-delete-button'>clear</p>" : ''}
             <h2>${project.name}</h2>`;
 
         newProjectElement.classList.add('project');
@@ -52,7 +52,7 @@ const domManager = (function(){
         }
         newProjectElement.addEventListener('click', changeSelectedProject.bind(null, project));
         if(project.type == 'normal'){
-            let deleteProjectButton = newProjectElement.querySelector('.project-delete-emoji');
+            let deleteProjectButton = newProjectElement.querySelector('.project-delete-button');
             deleteProjectButton.addEventListener('click', onProjectDelete.bind(null, project.name));
         }
         return newProjectElement;
@@ -69,9 +69,9 @@ const domManager = (function(){
         </summary>
         <p>${task.description}</p>
         <div class="task-options" style="display:flex;align-items:center">
-                <p class="option edit-task-emoji ">✏️</p>
-                <p class="option delete-task-emoji">🗑️</p>
-                <p class="option move-task-emoji">📁</p>   
+                <p class="material-icons option edit-task-button">edit</p>
+                <p class="material-icons option delete-task-button">delete</p>
+                <p class="material-icons option move-task-button">folder</p>   
             </div>`;
         newTaskElement.classList.add('task');
 
@@ -91,9 +91,9 @@ const domManager = (function(){
             newTaskElement.style.backgroundColor = settings.priorityColors[task.priority]; //Add color based on priority settings 
         }
         newTaskElement.querySelector('input').addEventListener('change', onTaskComplete.bind(null, task));
-        newTaskElement.querySelector('.edit-task-emoji').addEventListener('click', onTaskEdit.bind(null, newTaskElement));
-        newTaskElement.querySelector('.delete-task-emoji').addEventListener('click', onTaskDelete.bind(null, newTaskElement));
-        newTaskElement.querySelector('.move-task-emoji').addEventListener('click', onTaskMove.bind(null, newTaskElement));
+        newTaskElement.querySelector('.edit-task-button').addEventListener('click', onTaskEdit.bind(null, newTaskElement));
+        newTaskElement.querySelector('.delete-task-button').addEventListener('click', onTaskDelete.bind(null, newTaskElement));
+        newTaskElement.querySelector('.move-task-button').addEventListener('click', onTaskMove.bind(null, newTaskElement));
         return newTaskElement;
     }
     const createAddTaskButton = (pos) => {

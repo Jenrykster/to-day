@@ -1,8 +1,8 @@
 const settings = {
     priorityColors : {
-        1: 'red',
-        2: 'orange',
-        3: 'green'
+        1: '#B10000',
+        2: '#FFC843',
+        3: '#00978A'
     }
 }
 

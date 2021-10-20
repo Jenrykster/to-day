@@ -10,6 +10,7 @@ body {
 }
 main {
     display: flex;
+    justify-content: center;
     height: 80vh;
 }
 summary:hover {
@@ -81,7 +82,7 @@ input[type="radio"]:checked + label {
     
     justify-content: space-around;
     margin-left: -40px;
-    background-color: aqua;
+    background-color: snow;
     transition: 0.3s;
 }
 .date-title-container {
@@ -108,10 +109,11 @@ input[type="radio"]:checked + label {
     transition: 0.3s;
     pointer-events: none;
 }
-.project-delete-emoji {
+.project-delete-button {
+    color: #FF0505;
     font-size: larger;
 }
-.project-delete-emoji:hover{
+.project-delete-button:hover{
     cursor: pointer;
 }
 .side-bar {
@@ -129,6 +131,9 @@ input[type="radio"]:checked + label {
     color: purple;
     font-size: 3em;
     margin-top: 15px;
+}
+.side-bar-button:hover {
+    cursor: pointer;
 }
 .add-task-button {
     background-color: transparent;
@@ -162,12 +167,16 @@ input[type="radio"]:checked + label {
 #task-desc-input {
     width: 95%;
 }
+.option {
+    text-align: center;
+    color: black;
+}
+.option:hover {
+    cursor: pointer;
+}
 .no-task {
     color: gray;
     text-align: center;
-}
-.edit-task-emoji {
-    margin-left: 10px;
 }
 @media (max-width: 430px) {
     .open {
